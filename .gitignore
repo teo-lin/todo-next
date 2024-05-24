@@ -1,79 +1,36 @@
-# Dependencies
-node_modules/
-jspm_packages/
-web_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Build output
-dist/
-build/
-out/
-.vuepress/dist
-.nuxt
-.next
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# Coverage reports
-lib-cov/
-coverage/
-*.lcov
-.nyc_output
+# testing
+/coverage
 
-# IDE and editor specific files
-.idea/
-!.vscode/launch.json
-/nodemon.json
+# next.js
+/.next/
+/out/
 
-# Common log files
-*.log
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
 
-# Compiled TypeScript or JavaScript
-*.jsx
-*.tsx
+# local env files
+.env*.local
 
-# Secret files
-.env*
-.secrets*
+# vercel
+.vercel
 
-# CI/CD configurations
-.gitlab-ci.yml
-.travis.yml
-.circleci/config.yml
-
-# OS specific files
-.DS_Store
-.gitignore
-
-# Diagnostic reports
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Caches and temp directories
+# typescript
 *.tsbuildinfo
-.npm
-.eslintcache
-.stylelintcache
-.rpt2_cache*
-.node_repl_history
-*.tgz
-.yarn-integrity
-.cache
-.parcel-cache
-.temp
-.cache
-.docusaurus
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-tmp
-package-lock.json
+next-env.d.ts

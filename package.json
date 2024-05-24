@@ -19,10 +19,10 @@
     "port": "3333",
     "framework": "Next.js"
   },
+  "type": "module",
   "scripts": {
+    "start": "next start",
     "dev": "next dev",
-    "start": "node src/app.js",
-    "start:dev": "nodemon src/app.js",
     "start:00": "nodemon src-00/app.js",
     "start:01": "nodemon src-01/app.js",
     "start:02": "nodemon src-02/app.js",
@@ -44,22 +44,28 @@
     "test:stress": "k6 run ./test-k6/stress.test.js",
     "test:spike": "k6 run ./test-k6/spike.test.js",
     "test:endurance": "k6 run ./k6/endurance.test.js",
-    "lint": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
+    "lint": "next lint",
+    "lint-standard": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
-    "build": "",
+    "build": "next build",
     "build:docker": "docker build --tag todo-app .",
     "start:docker": "docker run --detach --name todo-container --publish 3333:3333 --memory 4g --cpus 4 todo-app",
     "setup": "open --background -a Docker && npm run reset && npm install && npm install --global nodemon && docker build --tag todo-app .",
     "reset": "open --background -a Docker && rm -rf node_modules build dist out coverage package-lock.json && docker stop todo-container && docker rm todo-container || true && docker rmi todo-app || true"
   },
   "dependencies": {
-    "next": "^14.2.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.2.3"
   },
   "devDependencies": {
-    "@types/node": "20.12.11",
-    "@types/react": "18.3.2",
-    "typescript": "5.4.5"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3"
   }
 }
