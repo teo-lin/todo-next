@@ -23,7 +23,8 @@
   "scripts": {
     "start": "next start",
     "dev": "next dev",
-    "start:debug": "",
+    "start:debug": "nodemon --exec 'node --inspect -r ts-node/register' src/app.ts",
+    "start:build": "node build/app.js",
     "test": "",
     "test:watch": "",
     "test:cov": "",
