@@ -1,42 +1,45 @@
+import { List, NewList, Database } from '@/interfaces'
 import { DatabaseService } from './databaseService'
 
 export class ListService {
-  static createList(listData: any) {
-    const data = DatabaseService.getData()
-    const nextListId = `L${1 + Number(data.lastListId.slice(1))}`
-    const list = { listId: nextListId, ...listData }
+  static createList(listData: NewList): List {
+    const data: Database = DatabaseService.getData()
+    const nextListId: string = `L${1 + Number(data.lastListId.slice(1))}`
+    const list: List = { listId: nextListId, ...listData }
+
     data.lists.push(list)
     data.lastListId = nextListId
     DatabaseService.setData(data)
+
     return list
   }
 
-  static retrieveList(listId: string) {
-    const data = DatabaseService.getData()
-    return data.lists.find((list: any) => list.listId === listId)
+  static retrieveList(listId: string): List {
+    const data: Database = DatabaseService.getData()
+
+    const list: List | undefined = data.lists.find((list: List) => list.listId === listId)
+    if (!list) throw new Error('Not Found')
+    else return list
   }
 
-  static updateList(listId: string, listData: any) {
-    const data = DatabaseService.getData()
-    const listIndex = data.lists.findIndex((list: any) => list.listId === listId)
-    if (listIndex === -1) throw new Error('List not found')
-    data.lists[listIndex] = { ...data.lists[listIndex], ...listData }
+  static updateList(listId: string, listData: Partial<List>): List {
+    const data: Database = DatabaseService.getData()
+    const listIndex: number = data.lists.findIndex((list: any) => list.listId === listId)
+    if (listIndex === -1) throw new Error('Not Found')
+    const list: List = { ...data.lists[listIndex], ...listData }
+
+    data.lists[listIndex] = list
     DatabaseService.setData(data)
-    return data.lists[listIndex]
+
+    return list
   }
 
-  static deleteList(listId: string) {
-    const data = DatabaseService.getData()
-    data.lists = data.lists.filter((list: any) => list.listId !== listId)
-    DatabaseService.setData(data)
-  }
+  static deleteList(listId: string): void {
+    const data: Database = DatabaseService.getData()
+    const totalRecords = data.lists.length
 
-  static completeList(listId: string) {
-    const data = DatabaseService.getData()
-    const listIndex = data.lists.findIndex((list: any) => list.listId === listId)
-    if (listIndex === -1) throw new Error('List not found')
-    data.lists[listIndex].isComplete = true
-    DatabaseService.setData(data)
-    return data.lists[listIndex]
+    data.lists = data.lists.filter((list: List) => list.listId !== listId)
+    if (totalRecords === data.lists.length) throw new Error('Not Found')
+    else DatabaseService.setData(data)
   }
 }

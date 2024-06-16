@@ -8,9 +8,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     case 'GET':
       try {
         const list = ListService.retrieveList(id as string)
-        if (!list) return res.status(404).json({ message: 'List not found' })
         res.json(list)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'List not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -18,7 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         const list = ListService.updateList(id as string, req.body)
         res.json(list)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'List not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -26,7 +27,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         ListService.deleteList(id as string)
         res.json({ message: 'List deleted successfully' })
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'List not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break

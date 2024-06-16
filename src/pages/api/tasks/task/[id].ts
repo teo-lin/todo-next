@@ -10,7 +10,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const task = TaskService.retrieveTask(id as string)
         if (!task) return res.status(404).json({ message: 'Task not found' })
         res.json(task)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'Task not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -18,7 +19,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         const task = TaskService.updateTask(id as string, req.body)
         res.json(task)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'Task not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -26,7 +28,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         TaskService.deleteTask(id as string)
         res.json({ message: 'Task deleted successfully' })
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'Task not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break

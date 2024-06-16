@@ -10,7 +10,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const user = UserService.retrieveUser(id as string)
         if (!user) return res.status(404).json({ message: 'User not found' })
         res.json(user)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'User not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -18,7 +19,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         const user = UserService.updateUser(id as string, req.body)
         res.json(user)
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'User not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break
@@ -26,7 +28,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         UserService.deleteUser(id as string)
         res.json({ message: 'User deleted successfully' })
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message === 'Not Found') res.status(404).json({ message: 'User not found' })
         res.status(500).json({ message: (error as Error).message })
       }
       break

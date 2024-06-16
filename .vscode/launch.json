@@ -2,16 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "next:app",
       "type": "node",
       "request": "launch",
-      "name": "nodemon:app",
-      "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v20.14.0/bin/nodemon",
-      "program": "${workspaceFolder}/src/app.js",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
       "restart": true,
-      "console": "internalConsole",
-      "env": {
-        "NODE_ENV": "development"
-      }
+      "timeout": 5000,
+      "sourceMaps": true,
+      "outFiles": []
     }
   ]
 }
